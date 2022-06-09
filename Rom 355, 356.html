@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="VærDataNettside.css">
+</head>
+<title>Digital arbeidsbok</title>
+
+
+<body>
+<h1 class="header">Temperatur in klasserom på Amalie Skram VGS</h1>
+
+<div class="grid-container">
+
+<!-- Dropdown meny start-->
+<div class="grid-item meny">
+<div class="dropdown">
+  <img src="Bilder\menu.png" class="bildegalleri_meny">
+    <div class="dropdown-content">
+	<a href="index.html">Tilbake til startsiden</a>
+	<br>	
+    <a href="Oppgave">Oppgave</a>
+    <a href="Logg">Logg</a>
+    <a href="Datamodell">Datamodell</a>
+    </div>
+</div>
+</div>  
+<!-- Dropdown meny slutt-->
+
+   <div class="grid-item">Rom 355/356<br><br>
+      <a href="informasjonsteknologi.html"> 
+  </a>
+  </div>
+  
+  <div class="grid-item">Temperatur<br><br>
+  <a href="medieproduksjon.html"> 
+   </a>
+  </div>
+  
+  <div class="grid-item">Dato/Tid<br><br>
+   <a href="engelsk.html"> 
+   </a>
+  </div>
+
+</body>
+</html>
+
+
+<html>
+<head>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-linear-gauge.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-circular-gauge.min.js"></script>
+  <script src="https://cdn.anychart.com/releases/v8/js/anychart-table.min.js"></script>
+  <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+  <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+  <style type="text/css">
+
+  
+
+  
+
+ </style>
+</head>
+<body>
+  
+  <div id="container"></div>
+  
+
+  <script>
+
+    anychart.onDocumentReady(function () {
+      // Create table to place gauges and information
+      var layoutTable = anychart.standalones.table(4, 3);
+      layoutTable
+        .hAlign('center')
+        .vAlign('middle')
+        .useHtml(true)
+        .fontSize(16)
+        .cellBorder(null);
+
+      // Set height and width for termometer
+      layoutTable.getCol(2).width('50%');
+      layoutTable.getRow(0).height(60).fontSize(18);
+      layoutTable.getRow(1).height(60);
+      layoutTable.getRow(3).height(60).fontSize(14).vAlign('top');
+
+     
+
+      // Put data and charts into the layout table
+      layoutTable.contents([
+        [
+         
+          null,
+          null
+        ],
+        [
+          
+         
+        ],
+        [drawLinearGauge(28)],
+        [
+          'Temperature<br/>of the air'
+        ]
+      ]);
+
+      // Set container id and initiate drawing
+      layoutTable.container('container');
+      layoutTable.draw();
+
+      // Helper function to create linear gauge
+      function drawLinearGauge(value) {
+        var gauge = anychart.gauges.linear();
+        gauge.data([value]);
+        gauge.tooltip(false);
+
+        // Create thermometer title
+        gauge
+          .title()
+          .enabled(true)
+          .text(value + '°')
+          .fontColor('#212121')
+          .fontWeight(600)
+          .fontSize(24)
+          .orientation('bottom')
+          .useHtml(true)
+          .padding([10, 0, 5, 0]);
+
+        // Create thermometer pointer
+        var thermometer = gauge.thermometer(0);
+
+        // Set scale settings
+        var scale = gauge.scale();
+        scale
+          .minimum(0)
+          .maximum(40)
+          .ticks({ interval: 10 })
+          .minorTicks({ interval: 1 });
+        // Set axis and axis settings
+        var axis = gauge.axis();
+        axis.scale(scale).minorTicks(true).width('0').offset('0%');
+
+        // Set text formatter for axis labels
+        axis.labels().useHtml(true).format('{%Value}°');
+
+        return gauge;
+      }
+
+      // Helper function to create circular gauge
+      function drawCircularGauge(direction, force) {
+        var gauge = anychart.gauges.circular();
+        gauge.fill('white').margin(30).stroke(null).tooltip(false);
+        gauge.data([direction]);
+
+       
+      }
+    });
+  
+</script>
+</body>
+</html>
+
+
+
